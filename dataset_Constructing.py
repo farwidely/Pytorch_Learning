@@ -63,3 +63,7 @@ print(label3)
 # 导入图片文件夹
 # dir_path = "dataset/train/ants"
 # img_path_list = os.listdir(dir_path)
+
+# 数据集取子集
+# from torch.utils.data import Subset
+# dataset2 = Subset(dataset1, indices=range(0,10))
