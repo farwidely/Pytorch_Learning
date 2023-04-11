@@ -29,7 +29,7 @@ test_dataloader = DataLoader(test_data, batch_size=64)
 # 搭建神经网络见models.py
 
 # 创建网络模型
-cifar10 = Cifar10()
+cifar10 = MyCIFAR10()
 cifar10.to(device)
 # if torch.cuda.is_available():
 #     cifar10 = cifar10.cuda()
@@ -43,7 +43,8 @@ loss_fn.to(device)
 # 优化器
 # learning_rate = 0.01
 learning_rate = 1e-2
-optimizer = torch.optim.SGD(cifar10.parameters(), lr=learning_rate)
+momentum = 5e-1
+optimizer = torch.optim.SGD(cifar10.parameters(), lr=learning_rate, momentum=momentum)
 
 # 设置训练网络的参数
 # 记录训练的次数
@@ -57,7 +58,7 @@ epoch = 30
 # writer = SummaryWriter("./logs_train")
 
 for i in range(epoch):
-    print(f"------第 {i+1} 轮训练开始------")
+    print(f"------第 {i + 1} 轮训练开始------")
 
     # 训练步骤开始
     cifar10.train()
@@ -100,7 +101,7 @@ for i in range(epoch):
             total_accuracy += accuracy
 
     print(f"整体测试集上的Loss: {total_test_loss}")
-    print(f"整体测试集上的正确率: {total_accuracy/test_data_size}")
+    print(f"整体测试集上的正确率: {total_accuracy / test_data_size}")
     # writer.add_scalar("test_loss", total_test_loss, total_test_step)
     # writer.add_scalar("test_accuracy", total_accuracy/test_data_size, total_test_step)
     total_test_step += 1

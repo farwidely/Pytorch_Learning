@@ -1,6 +1,8 @@
 from torch.utils.data import Dataset
 from PIL import Image
 import os
+import torchvision
+from torchvision import transforms
 
 
 # 路径连接
@@ -67,3 +69,10 @@ print(label3)
 # 数据集取子集
 # from torch.utils.data import Subset
 # dataset2 = Subset(dataset1, indices=range(0,10))
+
+# # 准备数据集, 对数据集进行归一化
+# transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
+# # 训练集
+# train_dataset = torchvision.datasets.MNIST(root="./data", train=True, transform=transform, download=True)
+# # 测试集
+# test_dataset = torchvision.datasets.MNIST(root="./data", train=False, transform=transform, download=True)
