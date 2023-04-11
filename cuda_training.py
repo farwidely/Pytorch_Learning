@@ -2,6 +2,7 @@ import torchvision
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from models import *
+import time
 
 # 设置计算硬件为cpu或cuda
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -57,8 +58,12 @@ epoch = 30
 # 添加tensorboard
 # writer = SummaryWriter("./logs_train")
 
+start = time.time()
+
 for i in range(epoch):
     print(f"------第 {i + 1} 轮训练开始------")
+
+    start1 = time.time()
 
     # 训练步骤开始
     cifar10.train()
@@ -82,6 +87,10 @@ for i in range(epoch):
             print(f"训练次数: {total_train_step}，Loss: {loss.item()}")
             # writer.add_scalar("train_loss", loss.item(), total_train_step)
 
+    end1 = time.time()
+    print(f"本轮训练时长为{end1 - start1}秒")
+    start2 = time.time()
+
     # 测试步骤开始
     cifar10.eval()
     total_test_loss = 0
@@ -104,6 +113,10 @@ for i in range(epoch):
     print(f"整体测试集上的正确率: {total_accuracy / test_data_size}")
     # writer.add_scalar("test_loss", total_test_loss, total_test_step)
     # writer.add_scalar("test_accuracy", total_accuracy/test_data_size, total_test_step)
+
+    end2 = time.time()
+    print(f"本轮测试时长为{end2 - start2}秒\n")
+
     total_test_step += 1
 
     # torch.save(cifar10, f"./trained_models/cifar10_{i}.pth")
@@ -111,5 +124,8 @@ for i in range(epoch):
     if i == 29:
         torch.save(cifar10, f"./trained_models/cifar10_gpu_30.pth")
         print("模型已保存")
+
+end = time.time()
+print(f"训练+测试总时长为{end - start}秒")
 
 # writer.close()
