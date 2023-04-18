@@ -1,4 +1,5 @@
 import torchvision
+from sklearn.metrics import confusion_matrix
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from models import *
@@ -108,6 +109,10 @@ for i in range(epoch):
             total_test_loss += loss.item()
             accuracy = (outputs.argmax(1) == targets).sum()
             total_accuracy += accuracy
+
+            # 计算测试集混淆矩阵
+            # CM_test = confusion_matrix(outputs.argmax(1).to("cpu"), targets.to("cpu"), labels=[0, 1, 2, 3, 4, 5, 6, 7,
+            #                                                                                    8, 9])
 
     print(f"整体测试集上的Loss: {total_test_loss}")
     print(f"整体测试集上的正确率: {total_accuracy / test_data_size}")
