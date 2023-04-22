@@ -14,6 +14,7 @@ from torchvision import transforms
 # img_name = img_path[idx]
 # img_item_path = os.path.join(root_dir, label_dir, img_name)
 
+# 自定义数据集
 class MyData(Dataset):
     def __init__(self, root_dir, label_dir):
         self.root_dir = root_dir
@@ -22,6 +23,7 @@ class MyData(Dataset):
         self.img_path = os.listdir(self.path)
 
     def __getitem__(self, idx):
+
         img_name = self.img_path[idx]
         img_item_path = os.path.join(self.root_dir, self.label_dir, img_name)
         img = Image.open(img_item_path)
@@ -71,6 +73,27 @@ print(label3)
 # dataset2 = Subset(dataset1, indices=range(0,10))
 
 # # 准备数据集, 对数据集进行归一化
+"""
+transforms.RandomResizedCrop(size)    
+将给定图像随机裁剪为不同的大小和宽高比，然后缩放所裁剪得到的图像为制定的大小；（即先随机采集，然后对裁剪得到的图像缩放为同一大小）
+该操作的含义在于：即使只是该物体的一部分，我们也认为这是该类物体
+
+transforms.RandomVerticalFlip(p)
+以给定的概率随机垂直翻转给定的图像（PIL Image or Tensor）如果图像是torch张量，则期望它具有[C，H, W]形状，其中C表示任意数量的张量维度
+
+transforms.RandomHorizontalFlip(p)
+以给定的概率随机水平旋转给定的PIL的图像，默认为0.5
+
+transforms.Resize(size)
+将图片短边缩短至size (int)，长宽比保持不变
+
+transforms.Resize([h, w]
+同时制定长宽
+
+transforms.CenterCrop(size)
+从图像中心裁剪图片
+
+"""
 # transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
 # # 训练集
 # train_dataset = torchvision.datasets.MNIST(root="./data", train=True, transform=transform, download=True)

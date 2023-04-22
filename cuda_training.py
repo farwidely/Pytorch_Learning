@@ -2,6 +2,8 @@ import torchvision
 from sklearn.metrics import confusion_matrix
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+from tqdm import tqdm
+
 from models import *
 import time
 
@@ -43,6 +45,7 @@ loss_fn.to(device)
 #     loss_fn = loss_fn.cuda()
 
 # 优化器
+# 一般将参数momentum设为0.5,0.9，或者0.99，分别表示最大速度2倍，10倍，100倍于SGD的算法
 # learning_rate = 0.01
 learning_rate = 1e-2
 momentum = 5e-1
@@ -68,7 +71,7 @@ for i in range(epoch):
 
     # 训练步骤开始
     cifar10.train()
-    for data in train_dataloader:
+    for data in tqdm(train_dataloader):
         imgs, targets = data
         imgs = imgs.to(device)
         targets = targets.to(device)
@@ -97,7 +100,7 @@ for i in range(epoch):
     total_test_loss = 0
     total_accuracy = 0
     with torch.no_grad():
-        for data in test_dataloader:
+        for data in tqdm(test_dataloader):
             imgs, targets = data
             imgs = imgs.to(device)
             targets = targets.to(device)
