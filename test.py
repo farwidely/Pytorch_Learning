@@ -1,5 +1,3 @@
-import torchvision.models
+import torch
 
-model = torchvision.models.vgg16()
-
-print(model)
+print(torch.cuda.is_available())

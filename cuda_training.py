@@ -50,6 +50,10 @@ loss_fn.to(device)
 learning_rate = 1e-2
 momentum = 5e-1
 optimizer = torch.optim.SGD(cifar10.parameters(), lr=learning_rate, momentum=momentum)
+# 学习率衰减
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=9e-1)
+# optimizer = torch.optim.SGD(cifar10.parameters(), lr=learning_rate, weight_decay=1e-2)
+
 
 # 设置训练网络的参数
 # 记录训练的次数
