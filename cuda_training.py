@@ -98,6 +98,10 @@ for i in range(epoch):
 
     end1 = time.time()
     print(f"本轮训练时长为{end1 - start1}秒")
+
+    # 学习率衰减
+    scheduler.step()
+
     start2 = time.time()
 
     # 测试步骤开始
