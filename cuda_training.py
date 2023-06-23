@@ -120,6 +120,11 @@ for i in range(epoch):
             loss = loss_fn(outputs, targets)
             total_test_loss += loss.item()
             accuracy = (outputs.argmax(1) == targets).sum()
+
+            # one-hot labels
+            # equal_count = torch.sum(torch.all(torch.eq(outputs, targets), dim=1))
+            # accuracy = equal_count.item()
+
             total_accuracy += accuracy
 
             # 计算测试集混淆矩阵

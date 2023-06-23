@@ -1,3 +1,4 @@
-import torch
+import torchvision
 
-print(torch.cuda.is_available())
+model = torchvision.models.efficientnet_b0()
+print(model)
