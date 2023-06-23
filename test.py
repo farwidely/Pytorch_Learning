@@ -1,4 +1,4 @@
 import torchvision
 
-model = torchvision.models.efficientnet_b0()
+model = torchvision.models.mobilenet_v2()
 print(model)
