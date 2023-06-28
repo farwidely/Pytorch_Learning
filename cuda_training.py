@@ -48,10 +48,10 @@ loss_fn.to(device)
 # 一般将参数momentum设为0.5,0.9，或者0.99，分别表示最大速度2倍，10倍，100倍于SGD的算法
 # learning_rate = 0.01
 learning_rate = 1e-2
-momentum = 5e-1
+momentum = 0.9
 optimizer = torch.optim.SGD(cifar10.parameters(), lr=learning_rate, momentum=momentum)
 # 学习率衰减
-scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=9e-1)
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.1)
 # optimizer = torch.optim.SGD(cifar10.parameters(), lr=learning_rate, weight_decay=1e-2)
 
 

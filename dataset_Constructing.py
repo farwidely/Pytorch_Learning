@@ -84,8 +84,13 @@ transforms.RandomVerticalFlip(p)
 transforms.RandomHorizontalFlip(p)
 以给定的概率随机水平旋转给定的PIL的图像，默认为0.5
 
-transforms.Resize(size)
-将图片短边缩短至size (int)，长宽比保持不变
+transforms.Resize(size=224, antialias=True)
+将图片短边缩短至size (int)，长宽比保持不变，
+这个警告信息是关于torchvision中的图像变换函数的参数antialias的改变，从v0.17版本开始，Resize()、RandomResizedCrop()
+等所有调整图像大小的变换函数的默认antialias参数值将从None更改为True，以保持在PIL和Tensor后端之间的一致性。
+这个警告提醒用户在升级到v0.17版本后需要注意这个改变。
+如果想要避免这个警告，可以按照警告中的建议，直接将antialias参数设置为True或者False。
+如果没有特殊要求，建议将antialias参数设置为True，以获得更好的图像质量。
 
 transforms.Resize([h, w]
 同时制定长宽
