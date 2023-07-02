@@ -68,6 +68,13 @@ epoch = 30
 
 start = time.time()
 
+# 初始化模型在测试集上的评价指标变量
+# total_test_loss = 0
+# total_test_accuracy = 0
+# total_test_tp = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+# total_test_fp = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+# total_test_fn = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
 for i in range(epoch):
     print(f"------第 {i + 1} 轮训练开始------")
 
