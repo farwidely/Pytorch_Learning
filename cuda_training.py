@@ -129,7 +129,13 @@ for i in range(epoch):
 
             # 计算测试集混淆矩阵
             # CM_test = confusion_matrix(outputs.argmax(1).to("cpu"), targets.to("cpu"), labels=[0, 1, 2, 3, 4, 5, 6, 7,
-            #                                                                                    8, 9])
+            #                                                                                     8, 9])
+            # TP = np.diag(CM_test)
+            # FP = CM_test.sum(axis=0) - np.diag(CM_test)
+            # FN = CM_test.sum(axis=1) - np.diag(CM_test)
+            # total_test_tp += TP
+            # total_test_fp += FP
+            # total_test_fn += FN
 
     print(f"整体测试集上的Loss: {total_test_loss}")
     print(f"整体测试集上的正确率: {total_accuracy / test_data_size}")
