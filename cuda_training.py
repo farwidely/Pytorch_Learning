@@ -144,6 +144,11 @@ for i in range(epoch):
             # total_test_fp += FP
             # total_test_fn += FN
 
+    # 计算测试集查准率、查全率、F1指数
+    # test_Precision = total_test_tp / (total_test_tp + total_test_fp)
+    # test_Recall = total_test_tp / (total_test_tp + total_test_fn)
+    # test_f1 = 2 * test_Precision * test_Recall / (test_Precision + test_Recall)
+
     print(f"整体测试集上的Loss: {total_test_loss}")
     print(f"整体测试集上的正确率: {total_accuracy / test_data_size}")
     # writer.add_scalar("test_loss", total_test_loss, total_test_step)
