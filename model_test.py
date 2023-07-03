@@ -6,98 +6,12 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from tqdm import tqdm
 
-class2label = {
-    'C1': [0, 0, 0, 0, 0, 0, 0, 0],
-    'C2': [1, 0, 0, 0, 0, 0, 0, 0],
-    'C3': [0, 1, 0, 0, 0, 0, 0, 0],
-    'C4': [0, 0, 1, 0, 0, 0, 0, 0],
-    'C5': [0, 0, 0, 1, 0, 0, 0, 0],
-    'C6': [0, 0, 0, 0, 1, 0, 0, 0],
-    'C7': [0, 0, 0, 0, 0, 1, 0, 0],
-    'C8': [0, 0, 0, 0, 0, 0, 1, 0],
-    'C9': [0, 0, 0, 0, 0, 0, 0, 1],
-    'C10': [1, 0, 1, 0, 0, 0, 0, 0],
-    'C11': [1, 0, 0, 1, 0, 0, 0, 0],
-    'C12': [1, 0, 0, 0, 1, 0, 0, 0],
-    'C13': [1, 0, 0, 0, 0, 0, 1, 0],
-    'C14': [0, 1, 1, 0, 0, 0, 0, 0],
-    'C15': [0, 1, 0, 1, 0, 0, 0, 0],
-    'C16': [0, 1, 0, 0, 1, 0, 0, 0],
-    'C17': [0, 1, 0, 0, 0, 0, 1, 0],
-    'C18': [0, 0, 1, 0, 1, 0, 0, 0],
-    'C19': [0, 0, 1, 0, 0, 0, 1, 0],
-    'C20': [0, 0, 0, 1, 1, 0, 0, 0],
-    'C21': [0, 0, 0, 1, 0, 0, 1, 0],
-    'C22': [0, 0, 0, 0, 1, 0, 1, 0],
-    'C23': [1, 0, 1, 0, 1, 0, 0, 0],
-    'C24': [1, 0, 1, 0, 0, 0, 1, 0],
-    'C25': [1, 0, 0, 1, 1, 0, 0, 0],
-    'C26': [1, 0, 0, 1, 0, 0, 1, 0],
-    'C27': [1, 0, 0, 0, 1, 0, 1, 0],
-    'C28': [0, 1, 1, 0, 1, 0, 0, 0],
-    'C29': [0, 1, 1, 0, 0, 0, 1, 0],
-    'C30': [0, 1, 0, 1, 1, 0, 0, 0],
-    'C31': [0, 1, 0, 1, 0, 0, 1, 0],
-    'C32': [0, 1, 0, 0, 1, 0, 1, 0],
-    'C33': [0, 0, 1, 0, 1, 0, 1, 0],
-    'C34': [0, 0, 0, 1, 1, 0, 1, 0],
-    'C35': [1, 0, 1, 0, 1, 0, 1, 0],
-    'C36': [1, 0, 0, 1, 1, 0, 1, 0],
-    'C37': [0, 1, 1, 0, 1, 0, 1, 0],
-    'C38': [0, 1, 0, 1, 1, 0, 1, 0],
-}
-
-label2class = {
-    (0, 0, 0, 0, 0, 0, 0, 0): 'C1',
-    (1, 0, 0, 0, 0, 0, 0, 0): 'C2',
-    (0, 1, 0, 0, 0, 0, 0, 0): 'C3',
-    (0, 0, 1, 0, 0, 0, 0, 0): 'C4',
-    (0, 0, 0, 1, 0, 0, 0, 0): 'C5',
-    (0, 0, 0, 0, 1, 0, 0, 0): 'C6',
-    (0, 0, 0, 0, 0, 1, 0, 0): 'C7',
-    (0, 0, 0, 0, 0, 0, 1, 0): 'C8',
-    (0, 0, 0, 0, 0, 0, 0, 1): 'C9',
-    (1, 0, 1, 0, 0, 0, 0, 0): 'C10',
-    (1, 0, 0, 1, 0, 0, 0, 0): 'C11',
-    (1, 0, 0, 0, 1, 0, 0, 0): 'C12',
-    (1, 0, 0, 0, 0, 0, 1, 0): 'C13',
-    (0, 1, 1, 0, 0, 0, 0, 0): 'C14',
-    (0, 1, 0, 1, 0, 0, 0, 0): 'C15',
-    (0, 1, 0, 0, 1, 0, 0, 0): 'C16',
-    (0, 1, 0, 0, 0, 0, 1, 0): 'C17',
-    (0, 0, 1, 0, 1, 0, 0, 0): 'C18',
-    (0, 0, 1, 0, 0, 0, 1, 0): 'C19',
-    (0, 0, 0, 1, 1, 0, 0, 0): 'C20',
-    (0, 0, 0, 1, 0, 0, 1, 0): 'C21',
-    (0, 0, 0, 0, 1, 0, 1, 0): 'C22',
-    (1, 0, 1, 0, 1, 0, 0, 0): 'C23',
-    (1, 0, 1, 0, 0, 0, 1, 0): 'C24',
-    (1, 0, 0, 1, 1, 0, 0, 0): 'C25',
-    (1, 0, 0, 1, 0, 0, 1, 0): 'C26',
-    (1, 0, 0, 0, 1, 0, 1, 0): 'C27',
-    (0, 1, 1, 0, 1, 0, 0, 0): 'C28',
-    (0, 1, 1, 0, 0, 0, 1, 0): 'C29',
-    (0, 1, 0, 1, 1, 0, 0, 0): 'C30',
-    (0, 1, 0, 1, 0, 0, 1, 0): 'C31',
-    (0, 1, 0, 0, 1, 0, 1, 0): 'C32',
-    (0, 0, 1, 0, 1, 0, 1, 0): 'C33',
-    (0, 0, 0, 1, 1, 0, 1, 0): 'C34',
-    (1, 0, 1, 0, 1, 0, 1, 0): 'C35',
-    (1, 0, 0, 1, 1, 0, 1, 0): 'C36',
-    (0, 1, 1, 0, 1, 0, 1, 0): 'C37',
-    (0, 1, 0, 1, 1, 0, 1, 0): 'C38'}
-
-label = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10',
-         'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20',
-         'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C27', 'C28', 'C29', 'C30',
-         'C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C37', 'C38']
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-class WM38Dataset(Dataset):
+class MyDataset(Dataset):
     def __init__(self, images, labels, transform=None):
-        super(WM38Dataset, self).__init__()
+        super(MyDataset, self).__init__()
         self.data = torch.from_numpy(images)
         self.labels = torch.from_numpy(labels)
         self.transform = transform
@@ -111,12 +25,12 @@ class WM38Dataset(Dataset):
         return len(self.data)
 
 
-dataset = np.load("./data_processing/dataset/dataset.npz")
+dataset = np.load("./dataset.npz")
 transform = transforms.Compose([transforms.Resize(size=112, antialias=True)])
 
-train_dataset = WM38Dataset(dataset["X_train"], dataset["y_train"], transform=transform)
-val_dataset = WM38Dataset(dataset["X_val"], dataset["y_val"], transform=transform)
-test_dataset = WM38Dataset(dataset["X_test"], dataset["y_test"], transform=transform)
+train_dataset = MyDataset(dataset["X_train"], dataset["y_train"], transform=transform)
+val_dataset = MyDataset(dataset["X_val"], dataset["y_val"], transform=transform)
+test_dataset = MyDataset(dataset["X_test"], dataset["y_test"], transform=transform)
 
 train_data_size = len(train_dataset)
 val_data_size = len(val_dataset)
@@ -146,11 +60,6 @@ total_test_accuracy = 0
 total_test_tp = np.array([0] * 38)
 total_test_fp = np.array([0] * 38)
 total_test_fn = np.array([0] * 38)
-
-num = np.array(
-    [111, 117, 93, 92, 126, 103, 16, 100, 87, 94, 87, 94, 90, 102, 95, 95, 97, 88, 99, 109, 108, 86, 103, 231, 101,
-     102, 86, 96, 85, 103, 102, 90, 108, 95, 101, 90, 98, 122])
-correct_num = np.array([0] * 38)
 
 with torch.no_grad():
     for data in tqdm(train_dataloader):
@@ -199,23 +108,15 @@ with torch.no_grad():
         y_true = []
         y_pred = []
 
-        for i in range(len(outputs)):
-            if equal_matrix[i]:
-                for j in range(len(class2label)):
-                    if torch.all(torch.eq(outputs[i].to('cpu'), torch.Tensor(class2label[f'C{j + 1}']))):
-                        correct_num[j] += 1
-                        break
-            y_true.append(label2class[tuple(targets[i].to('cpu').numpy().astype(int))])
-            y_pred.append(label2class[tuple(outputs[i].to('cpu').numpy().astype(int))])
 
         # 计算测试集混淆矩阵
-        CM_test = confusion_matrix(y_pred, y_true, labels=label)
-        TP = np.diag(CM_test)
-        FP = CM_test.sum(axis=0) - np.diag(CM_test)
-        FN = CM_test.sum(axis=1) - np.diag(CM_test)
-        total_test_tp += TP
-        total_test_fp += FP
-        total_test_fn += FN
+        # CM_test = confusion_matrix(y_pred, y_true, labels=label)
+        # TP = np.diag(CM_test)
+        # FP = CM_test.sum(axis=0) - np.diag(CM_test)
+        # FN = CM_test.sum(axis=1) - np.diag(CM_test)
+        # total_test_tp += TP
+        # total_test_fp += FP
+        # total_test_fn += FN
 
         equal_count = torch.sum(equal_matrix)
         accuracy = equal_count.item()
@@ -231,4 +132,3 @@ with torch.no_grad():
     print(f"整体测试集上的F1-score: {test_f1}")
     print(f"整体测试集上的Loss: {total_test_loss}")
     print(f"整体测试集上的正确率: {total_test_accuracy / test_data_size}")
-    print(f"整体测试集上各类别正确率：{correct_num / num}")
