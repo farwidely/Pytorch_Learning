@@ -30,6 +30,9 @@ print(f"测试数据集的长度为: {test_data_size}")
 train_dataloader = DataLoader(train_data, batch_size=64)
 test_dataloader = DataLoader(test_data, batch_size=64)
 
+# # 显示train_dataloader中的第一份数据
+# print(next(iter(train_dataloader)))
+
 # 搭建神经网络见models.py
 
 # 创建网络模型
