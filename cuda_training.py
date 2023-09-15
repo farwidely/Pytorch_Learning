@@ -93,7 +93,7 @@ for i in range(epoch):
         #     imgs = imgs.cuda()
         #     targets = targets.cuda()
         outputs = cifar10(imgs)
-        print(outputs)
+        # print(outputs)
         loss = loss_fn(outputs, targets)
 
         # 优化器优化模型
