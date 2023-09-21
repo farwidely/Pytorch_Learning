@@ -2,9 +2,9 @@ import torch
 from torch import nn
 
 
-class ShuffleChannel(nn.Module):
+class ChannelShuffle(nn.Module):
     def __init__(self, groups):
-        super(ShuffleChannel, self).__init__()
+        super(ChannelShuffle, self).__init__()
         self.groups = groups
 
     def forward(self, x):
