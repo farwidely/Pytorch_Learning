@@ -1,2 +1,5 @@
 .idea
 data
+logs_imgs
+logs_seq
+logs_train
