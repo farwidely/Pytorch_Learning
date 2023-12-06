@@ -1,5 +1,5 @@
 import torchvision
-from sklearn.metrics import confusion_matrix
+# from sklearn.metrics import confusion_matrix
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
@@ -165,7 +165,7 @@ for i in range(epoch):
     # torch.save(cifar10, f"./trained_models/cifar10_{i}.pth")
     # torch.save(cifar10.state_dict(), f"./trained_models/cifar10_{i}.pth")
     if i == 29:
-        torch.save(cifar10, f"./trained_models/cifar10_gpu_30.pth")
+        torch.save(cifar10, f"./trained_models/MyCIFAR10_gpu_30.pth")
         print("模型已保存")
 
 end = time.time()

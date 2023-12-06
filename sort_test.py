@@ -45,7 +45,7 @@ class Cifar10(nn.Module):
         return x
 
 
-model = torch.load("./trained_models/cifar10_gpu_30.pth")
+model = torch.load("./trained_models/MyCIFAR10_gpu_30.pth")
 model.to(device)
 # print(model)
 image = torch.reshape(image, (1, 3, 32, 32))
